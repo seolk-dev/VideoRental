@@ -19,13 +19,7 @@ public class Video {
 	}
 
 	public int getLateReturnPointPenalty() {
-		int pentalty = 0 ;
-		switch ( getVideoType() ) {
-			case VHS: pentalty = 1 ; break ;
-			case CD: pentalty = 2 ; break ;
-			case DVD: pentalty = 3 ; break ;
-		}
-		return pentalty ;
+		return getVideoType().getPenalty() ;
 	}
 	public int getPriceCode() {
 		return priceCode;
@@ -62,13 +56,6 @@ public class Video {
 	}
 
 	int getLimit() {
-		int limit = 0;
-		switch (getVideoType() ) {
-			case VHS: limit = 5 ; break ;
-			case CD: limit = 3 ; break ;
-			case DVD: limit = 2 ; break ;
-			default:
-		}
-		return limit;
+		return getVideoType().getLimit();
 	}
 }
