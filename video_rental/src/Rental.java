@@ -59,11 +59,8 @@ public class Rental {
 		if ( daysRented <= 2) return limit ;
 
 		//video로 옮겨가도 되지않나.
-		switch ( video.getVideoType() ) {
-			case Video.VHS: limit = 5 ; break ;
-			case Video.CD: limit = 3 ; break ;
-			case Video.DVD: limit = 2 ; break ;
-		}
+		limit = video.getLimit(limit);
 		return limit ;
 	}
+
 }

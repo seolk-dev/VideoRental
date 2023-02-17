@@ -72,8 +72,8 @@ public class VRUI {
 		customerManager.addCustomer(james) ;
 		customerManager.addCustomer(brown); ;
 
-		Video v1 = new Video("v1", Video.CD, Video.REGULAR, new Date()) ;
-		Video v2 = new Video("v2", Video.DVD, Video.NEW_RELEASE, new Date()) ;
+		Video v1 = new Video("v1", VideoType.CD, Video.REGULAR, new Date()) ;
+		Video v2 = new Video("v2", VideoType.DVD, Video.NEW_RELEASE, new Date()) ;
 		videoManager.addVideo(v1); ;
 		videoManager.addVideo(v2) ;
 
@@ -111,7 +111,7 @@ public class VRUI {
 			int priceCode = scanner.nextInt();
 
 			Date registeredDate = new Date();
-			Video video = new Video(title, videoType, priceCode, registeredDate) ;
+			Video video = new Video(title, VideoType.fromValue(videoType), priceCode, registeredDate) ;
 			videoManager.addVideo(video); ;
 		}
 	}
