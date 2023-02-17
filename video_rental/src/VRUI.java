@@ -10,6 +10,11 @@ public class VRUI {
 
 	private static VideoManager videoManager = new VideoManager();
 
+	public VRUI() {
+		customerManager = new CustomerManager();
+		videoManager = new VideoManager();
+	}
+
 	public static void main(String[] args) {
 		VRUI ui = new VRUI() ;
 
@@ -18,8 +23,8 @@ public class VRUI {
 			int command = ui.showCommand() ;
 			switch ( command ) {
 				case 0: quit = true ; break ;
-				case 1: customerManager.listCustomers(); break ;
-				case 2: videoManager.listVideos() ; break ;
+				case 1: ui.listCustomers(); break ;
+				case 2: ui.listVideos() ; break ;
 				case 3: ui.registerCustomer(); ; break ;
 				case 4: ui.registerVideo(); break ;
 				case 5: ui.rentVideo() ; break ;
@@ -38,6 +43,28 @@ public class VRUI {
 		String customerName = scanner.next();
 
 		return customerManager.getCustomer(customerName);
+	}
+
+	public void listCustomers() {
+		System.out.println("List of customers");
+		for ( Customer customer: customerManager.getCustomerList() ) {
+			System.out.println("Name: " + customer.getName() +
+					"\tRentals: " + customer.getRentals().size()) ;
+			for ( Rental rental: customer.getRentals() ) {
+				System.out.print("\tTitle: " + rental.getVideo().getTitle() + " ") ;
+				System.out.print("\tPrice Code: " + rental.getVideo().getPriceCode()) ;
+			}
+		}
+		System.out.println("End of list");
+	}
+
+	public void listVideos() {
+		System.out.println("List of videos");
+
+		for ( Video video: videoManager.getVideos() ) {
+			System.out.println("Price code: " + video.getPriceCode() +"\tTitle: " + video.getTitle()) ;
+		}
+		System.out.println("End of list");
 	}
 
 	public void clearRentals() {

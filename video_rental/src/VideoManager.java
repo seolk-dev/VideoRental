@@ -42,13 +42,4 @@ public class VideoManager {
             }
         }
     }
-
-    public void listVideos() {
-        System.out.println("List of videos");
-
-        for ( Video video: getVideos() ) {
-            System.out.println("Price code: " + video.getPriceCode() +"\tTitle: " + video.getTitle()) ;
-        }
-        System.out.println("End of list");
-    }
 }

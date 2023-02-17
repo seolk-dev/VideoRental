@@ -26,30 +26,6 @@ public class CustomerManager {
         customers.add(customer);
     }
 
-    public void listCustomers() {
-        System.out.println("List of customers");
-        for ( Customer customer: getCustomerList() ) {
-            System.out.println("Name: " + customer.getName() +
-                    "\tRentals: " + customer.getRentals().size()) ;
-            for ( Rental rental: customer.getRentals() ) {
-                System.out.print("\tTitle: " + rental.getVideo().getTitle() + " ") ;
-                System.out.print("\tPrice Code: " + rental.getVideo().getPriceCode()) ;
-            }
-        }
-        System.out.println("End of list");
-    }
-
-    public void getCustomerReport(String customerName) {
-        Customer foundCustomer = findCustomer(customerName);
-
-        if ( foundCustomer == null ) {
-            System.out.println("No customer found") ;
-        } else {
-            String result = makeReport(foundCustomer) ;
-            System.out.println(result);
-        }
-    }
-
     void registerCustomer(String name) {
         Customer customer = new Customer(name) ;
         addCustomer(customer);
