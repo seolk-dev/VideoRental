@@ -33,11 +33,15 @@ public class VRUI {
 		System.out.println("Bye");
 	}
 
-	public void clearRentals() {
-		System.out.println("Enter customer name: ") ;
-		String customerName = scanner.next() ;
+	private Customer getCustomer() {
+		System.out.println("Enter customer name: ");
+		String customerName = scanner.next();
 
-		Customer foundCustomer = customerManager.findCustomer(customerName);
+		return customerManager.getCustomer(customerName);
+	}
+
+	public void clearRentals() {
+		Customer foundCustomer = getCustomer();
 
 		if ( foundCustomer == null ) {
 			System.out.println("No customer found") ;
@@ -55,21 +59,25 @@ public class VRUI {
 	}
 
 	public void returnVideo() {
-		System.out.println("Enter customer name: ") ;
-		String customerName = scanner.next() ;
-
-		Customer foundCustomer = customerManager.findCustomer(customerName);
+		Customer foundCustomer = getCustomer();
 		if ( foundCustomer == null ) return ;
 
 		System.out.println("Enter video title to return: ") ;
 		String videoTitle = scanner.next() ;
 		videoManager.returnVideo(foundCustomer, videoTitle);
 	}
-	
+
 	public void getCustomerReport() {
-		System.out.println("Enter customer name: ") ;
-		String name = scanner.next();
-		customerManager.getCustomerReport(name);
+		Customer foundCustomer = getCustomer();
+		String result = customerManager.makeReport(foundCustomer);
+		int totalPoint = customerManager.getTotalPoint(foundCustomer.getRentals());
+		if (totalPoint >= 10) {
+			System.out.println("Congrat! You earned one free coupon");
+		}
+		if (totalPoint >= 30) {
+			System.out.println("Congrat! You earned two free coupon");
+		}
+		System.out.println(result);
 	}
 
 	private void init() {
@@ -91,10 +99,7 @@ public class VRUI {
 	}
 
 	public void rentVideo() {
-		System.out.println("Enter customer name: ") ;
-		String customerName = scanner.next() ;
-
-		Customer foundCustomer = customerManager.findCustomer(customerName);
+		Customer foundCustomer = getCustomer();
 
 		if ( foundCustomer == null ) return ;
 

@@ -64,19 +64,34 @@ public class Rental {
 		return daysRented;
 	}
 
-	public double getEachCharge(int daysRented) {
-		double eachCharge = 0;
-		switch (getVideo().getPriceCode()) {
-			case Video.REGULAR:
-				eachCharge += 2;
-				if (daysRented > 2)
-					eachCharge += (daysRented - 2) * 1.5;
-				break;
-			case Video.NEW_RELEASE:
-				eachCharge = daysRented * 3;
-				break;
+	public double getCharge() {
+		double charge = 0;
+		int daysRented = getDaysRented();
+
+		if (isNewRelease()) {
+			charge = daysRented * 3;
+
+		} else {
+			charge += 2;
+			if (daysRented > 2)
+				charge += (daysRented - 2) * 1.5;
 		}
-		return eachCharge;
+
+		return charge;
+	}
+
+	public int getPoint() {
+		int point = 0;
+		int daysRented = getDaysRented();
+
+		if(isNewRelease()) {
+			point++;
+		}
+
+		if (daysRented > getDaysRentedLimit()) {
+			point -= Math.min(point, getLateReturnPointPenalty());
+		}
+		return point;
 	}
 
 	public boolean isNewRelease() {
