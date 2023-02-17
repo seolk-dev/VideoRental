@@ -64,7 +64,8 @@ public class Rental {
 		return daysRented;
 	}
 
-	public double getEachCharge(double eachCharge, int daysRented) {
+	public double getEachCharge(int daysRented) {
+		double eachCharge = 0;
 		switch (getVideo().getPriceCode()) {
 			case Video.REGULAR:
 				eachCharge += 2;

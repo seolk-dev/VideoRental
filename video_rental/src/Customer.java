@@ -45,7 +45,7 @@ public class Customer {
 			int daysRented = 0;
 
 			daysRented = each.getDaysRented();
-			eachCharge = each.getEachCharge(eachCharge, daysRented);
+			eachCharge = each.getEachCharge(daysRented);
 			eachPoint++;
 
 			if (each.isNewRelease())
