@@ -6,7 +6,7 @@ public class Video {
 	private int priceCode ;
 	public static final int REGULAR = 1 ;
 	public static final int NEW_RELEASE =2 ;
-		
+
 	private VideoType videoType;
 	private Date registeredDate ;
 	private boolean rented ;
@@ -61,7 +61,8 @@ public class Video {
 		this.videoType = videoType;
 	}
 
-	int getLimit(int limit) {
+	int getLimit() {
+		int limit = 0;
 		switch (getVideoType() ) {
 			case VHS: limit = 5 ; break ;
 			case CD: limit = 3 ; break ;
