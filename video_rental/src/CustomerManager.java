@@ -39,9 +39,7 @@ public class CustomerManager {
         System.out.println("End of list");
     }
 
-    public void getCustomerReport(String customerName) {
-        System.out.println("Enter customer name: ") ;
-        
+    public void getCustomerReport(String customerName) {        
         Customer foundCustomer = findCustomer(customerName);
 
         if ( foundCustomer == null ) {

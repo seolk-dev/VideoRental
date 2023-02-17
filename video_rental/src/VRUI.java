@@ -20,11 +20,11 @@ public class VRUI {
 				case 0: quit = true ; break ;
 				case 1: customerManager.listCustomers(); break ;
 				case 2: videoManager.listVideos() ; break ;
-				case 3: ui.register("customer") ; break ;
-				case 4: ui.register("video") ; break ;
+				case 3: ui.registerCustomer(); ; break ;
+				case 4: ui.registerVideo(); break ;
 				case 5: ui.rentVideo() ; break ;
 				case 6: ui.returnVideo() ; break ;
-				case 7: customerManager.getCustomerReport(scanner.next()); break;
+				case 7: ui.getCustomerReport(); break;
 				case 8: ui.clearRentals() ; break ;
 				case -1: ui.init() ; break ;
 				default: break ;
@@ -65,6 +65,12 @@ public class VRUI {
 		String videoTitle = scanner.next() ;
 		videoManager.returnVideo(foundCustomer, videoTitle);
 	}
+	
+	public void getCustomerReport() {
+		System.out.println("Enter customer name: ") ;
+		String name = scanner.next();
+		customerManager.getCustomerReport(name);
+	}
 
 	private void init() {
 		Customer james = new Customer("James") ;
@@ -97,23 +103,25 @@ public class VRUI {
 		videoManager.rentVideo(foundCustomer, videoTitle);
 	}
 
-	public void register(String object) {
-		if ( object.equals("customer") ) {
-			customerManager.registerCustomer(scanner.next());
-		} else {
-			System.out.println("Enter video title to register: ") ;
-			String title = scanner.next() ;
+	public void registerCustomer() {
+		System.out.println("Enter customer name: ");
+		String name = scanner.next();
+		customerManager.registerCustomer(name);
+	}
 
-			System.out.println("Enter video type( 1 for VHD, 2 for CD, 3 for DVD ):") ;
-			int videoType = scanner.nextInt();
+	private void registerVideo() {
+		System.out.println("Enter video title to register: ") ;
+		String title = scanner.next() ;
 
-			System.out.println("Enter price code( 1 for Regular, 2 for New Release ):") ;
-			int priceCode = scanner.nextInt();
+		System.out.println("Enter video type( 1 for VHD, 2 for CD, 3 for DVD ):") ;
+		int videoType = scanner.nextInt();
 
-			Date registeredDate = new Date();
-			Video video = new Video(title, VideoType.fromValue(videoType), priceCode, registeredDate) ;
-			videoManager.addVideo(video); ;
-		}
+		System.out.println("Enter price code( 1 for Regular, 2 for New Release ):") ;
+		int priceCode = scanner.nextInt();
+
+		Date registeredDate = new Date();
+		Video video = new Video(title, VideoType.fromValue(videoType), priceCode, registeredDate) ;
+		videoManager.addVideo(video);
 	}
 
 	public int showCommand() {
