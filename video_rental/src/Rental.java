@@ -4,19 +4,7 @@ public class Rental {
 	private Video video ;
 	private RentalStatusType status ;
 	private Date rentDate ;
-	private Date returnDate ;
-
-	int getDaysRented() {
-		int daysRented;
-		if (getStatus() == RentalStatusType.RETURNED) { // returned Video
-			long diff = getReturnDate().getTime() - getRentDate().getTime();
-			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
-		} else { // not yet returned
-			long diff = new Date().getTime() - getRentDate().getTime();
-			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
-		}
-		return daysRented;
-	}
+	private Date returnDate ;	
 
 	enum RentalStatusType {
 		RENTED,
@@ -62,6 +50,32 @@ public class Rental {
 
 		limit = video.getLimit(limit);
 		return limit ;
+	}
+
+	public int getDaysRented() {
+		int daysRented;
+		if (getStatus() == RentalStatusType.RETURNED) { // returned Video
+			long diff = getReturnDate().getTime() - getRentDate().getTime();
+			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
+		} else { // not yet returned
+			long diff = new Date().getTime() - getRentDate().getTime();
+			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
+		}
+		return daysRented;
+	}
+
+	public double getEachCharge(double eachCharge, int daysRented) {
+		switch (getVideo().getPriceCode()) {
+			case Video.REGULAR:
+				eachCharge += 2;
+				if (daysRented > 2)
+					eachCharge += (daysRented - 2) * 1.5;
+				break;
+			case Video.NEW_RELEASE:
+				eachCharge = daysRented * 3;
+				break;
+		}
+		return eachCharge;
 	}
 
 }
