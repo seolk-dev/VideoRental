@@ -48,13 +48,13 @@ public class Customer {
 			eachCharge = each.getEachCharge(eachCharge, daysRented);
 			eachPoint++;
 
-			if ((each.getVideo().getPriceCode() == Video.NEW_RELEASE) )
+			if (each.isNewRelease())
 				eachPoint++;
 
 			if ( daysRented > each.getDaysRentedLimit() )
-				eachPoint -= Math.min(eachPoint, each.getVideo().getLateReturnPointPenalty()) ;
+				eachPoint -= Math.min(eachPoint, each.getLateReturnPointPenalty()) ;
 
-			result += "\t" + each.getVideo().getTitle() + "\tDays rented: " + daysRented + "\tCharge: " + eachCharge
+			result += "\t" + each.getTitle() + "\tDays rented: " + daysRented + "\tCharge: " + eachCharge
 					+ "\tPoint: " + eachPoint + "\n";
 
 			totalCharge += eachCharge;

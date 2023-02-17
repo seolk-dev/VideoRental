@@ -4,7 +4,7 @@ public class Rental {
 	private Video video ;
 	private RentalStatusType status ;
 	private Date rentDate ;
-	private Date returnDate ;	
+	private Date returnDate ;
 
 	enum RentalStatusType {
 		RENTED,
@@ -78,4 +78,15 @@ public class Rental {
 		return eachCharge;
 	}
 
+	public boolean isNewRelease() {
+		return getVideo().getPriceCode() == Video.NEW_RELEASE;
+	}
+
+	public int getLateReturnPointPenalty() {
+		return getVideo().getLateReturnPointPenalty();
+	}
+
+	public String getTitle() {
+		return getVideo().getTitle();
+	}
 }
