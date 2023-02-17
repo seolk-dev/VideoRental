@@ -6,6 +6,18 @@ public class Rental {
 	private Date rentDate ;
 	private Date returnDate ;
 
+	int getDaysRented() {
+		int daysRented;
+		if (getStatus() == RentalStatusType.RETURNED) { // returned Video
+			long diff = getReturnDate().getTime() - getRentDate().getTime();
+			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
+		} else { // not yet returned
+			long diff = new Date().getTime() - getRentDate().getTime();
+			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
+		}
+		return daysRented;
+	}
+
 	enum RentalStatusType {
 		RENTED,
 		RETURNED,
@@ -45,17 +57,9 @@ public class Rental {
 
 	public int getDaysRentedLimit() {
 		int limit = 0 ;
-		int daysRented ;
-		if (getStatus() == RentalStatusType.RETURNED) { // returned Video
-			long diff = returnDate.getTime() - rentDate.getTime();
-			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
-		} else { // not yet returned
-			long diff = new Date().getTime() - rentDate.getTime();
-			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
-		}
+		int daysRented = getDaysRented();
 		if ( daysRented <= 2) return limit ;
 
-		//video로 옮겨가도 되지않나.
 		limit = video.getLimit(limit);
 		return limit ;
 	}
