@@ -39,7 +39,7 @@ public class CustomerManager {
         System.out.println("End of list");
     }
 
-    public void getCustomerReport(String customerName) {        
+    public void getCustomerReport(String customerName) {
         Customer foundCustomer = findCustomer(customerName);
 
         if ( foundCustomer == null ) {
@@ -51,7 +51,6 @@ public class CustomerManager {
     }
 
     void registerCustomer(String name) {
-        System.out.println("Enter customer name: ") ;
         Customer customer = new Customer(name) ;
         addCustomer(customer);
     }
