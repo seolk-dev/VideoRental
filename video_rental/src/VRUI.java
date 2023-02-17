@@ -8,7 +8,7 @@ public class VRUI {
 
 	private static CustomerManager customerManager = new CustomerManager();
 
-	private List<Video> videos = new ArrayList<Video>() ;
+	private static VideoManager videoManager = new VideoManager();
 
 	public static void main(String[] args) {
 		VRUI ui = new VRUI() ;
@@ -19,7 +19,7 @@ public class VRUI {
 			switch ( command ) {
 				case 0: quit = true ; break ;
 				case 1: customerManager.listCustomers(); break ;
-				case 2: ui.listVideos() ; break ;
+				case 2: videoManager.listVideos() ; break ;
 				case 3: ui.register("customer") ; break ;
 				case 4: ui.register("video") ; break ;
 				case 5: ui.rentVideo() ; break ;
@@ -63,15 +63,7 @@ public class VRUI {
 
 		System.out.println("Enter video title to return: ") ;
 		String videoTitle = scanner.next() ;
-
-		List<Rental> customerRentals = foundCustomer.getRentals() ;
-		for ( Rental rental: customerRentals ) {
-			if ( rental.getVideo().getTitle().equals(videoTitle) && rental.getVideo().isRented() ) {
-				rental.returnVideo();
-				rental.getVideo().setRented(false);
-				break ;
-			}
-		}
+		videoManager.returnVideo(foundCustomer, videoTitle);
 	}
 
 	private void init() {
@@ -82,23 +74,14 @@ public class VRUI {
 
 		Video v1 = new Video("v1", Video.CD, Video.REGULAR, new Date()) ;
 		Video v2 = new Video("v2", Video.DVD, Video.NEW_RELEASE, new Date()) ;
-		videos.add(v1) ;
-		videos.add(v2) ;
+		videoManager.addVideo(v1); ;
+		videoManager.addVideo(v2) ;
 
 		Rental r1 = new Rental(v1) ;
 		Rental r2 = new Rental(v2) ;
 
 		james.addRental(r1) ;
 		james.addRental(r2) ;
-	}
-
-	public void listVideos() {
-		System.out.println("List of videos");
-
-		for ( Video video: videos ) {
-			System.out.println("Price code: " + video.getPriceCode() +"\tTitle: " + video.getTitle()) ;
-		}
-		System.out.println("End of list");
 	}
 
 	public void rentVideo() {
@@ -111,23 +94,7 @@ public class VRUI {
 
 		System.out.println("Enter video title to rent: ") ;
 		String videoTitle = scanner.next() ;
-
-		Video foundVideo = null ;
-		for ( Video video: videos ) {
-			if ( video.getTitle().equals(videoTitle) && video.isRented() == false ) {
-				foundVideo = video ;
-				break ;
-			}
-		}
-
-		if ( foundVideo == null ) return ;
-
-		Rental rental = new Rental(foundVideo) ;
-		foundVideo.setRented(true);
-
-		List<Rental> customerRentals = foundCustomer.getRentals() ;
-		customerRentals.add(rental);
-		foundCustomer.setRentals(customerRentals);
+		videoManager.rentVideo(foundCustomer, videoTitle);
 	}
 
 	public void register(String object) {
@@ -145,7 +112,7 @@ public class VRUI {
 
 			Date registeredDate = new Date();
 			Video video = new Video(title, videoType, priceCode, registeredDate) ;
-			videos.add(video) ;
+			videoManager.addVideo(video); ;
 		}
 	}
 

@@ -48,6 +48,8 @@ public class Video {
 		this.title = title;
 	}
 
+	public boolean compTitle(String title) { return title.equals(this.title); }
+
 	public boolean isRented() {
 		return rented;
 	}
